@@ -5,17 +5,26 @@ from requests.sessions import dispatch_hook
 #roster start
 json_response = requests.get('https://statsapi.web.nhl.com//api/v1/teams/8/roster')
 json_content = json.loads(json_response.content)
-header_dict = json_content['roster'][0]['person']
-print(header_dict.keys())
-print(header_dict.items())
-temp=[]
-dicklsit=[]
-for person in header_dict.items():
-    temp=[person]
-    dicklsit.append(temp)
-print(dicklsit)
-dicklsit
-print(dicklsit.keys())
+header_dict = json_content['roster']
+#print(header_dict.keys())
+for roster in header_dict:
+    personColumns = roster['person'].keys()
+    personValues = [roster['person'] for column in personColumns]
+    positionColumns = roster['position'].keys()
+    positionValues = [roster['position'] for column in positionColumns]
+    #print(personColumns)
+    #print(positionColumns)
+  
+    all= roster['person']|roster['position']
+    columns=all.keys()
+    values=[all for column in columns]
+
+print()
+print(header_dict)
+
+
+    
+
 
 
 
