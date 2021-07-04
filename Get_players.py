@@ -6,11 +6,12 @@ from sqlalchemy import create_engine # Module for working with DB
 from sqlalchemy import * # Module for working with DB
 from sqlalchemy.engine.url import URL # Module for working with DB
 from sqlalchemy.engine.reflection import Inspector # Module for view tables
-# Start variables list
-nationality='SWE'
-season='20202021'
-# End varibales list
-# Start ot application
+# Start Information about function
+# for example:
+# nationality='SWE'
+# season='20202021'
+# Get_players('20202021','SWE')
+# End Information about function
 # Start of function Get_players with 2 variables
 def Get_players(season,nationality):
     # Start static variables 
@@ -74,4 +75,3 @@ def Get_players(season,nationality):
                                         #print(readyDictSeventh['person_id'][0])
                                         readyDictSeventh.to_sql(tableName, dbEngine,if_exists='append', index=False)
 # End of function Get_players with 2 variables
-
