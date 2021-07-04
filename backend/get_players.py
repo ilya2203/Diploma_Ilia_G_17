@@ -5,6 +5,7 @@ import pandas as pd # Module for JSON arrange
 from sqlalchemy import create_engine # Module for working with DB
 from sqlalchemy.engine.url import URL # Module for working with DB
 from sqlalchemy import MetaData # Module for MetaData
+from sqlalchemy import Table
 from sqlalchemy.inspection import inspect # Module for view tables
 # Start Information about function
 # for example:
