@@ -3,9 +3,10 @@ import json # Json module
 import requests # Module for URL request
 import pandas as pd # Module for JSON arrange
 from sqlalchemy import create_engine # Module for working with DB
-from sqlalchemy import * # Module for working with DB
 from sqlalchemy.engine.url import URL # Module for working with DB
-from sqlalchemy.engine.reflection import Inspector # Module for view tables
+from sqlalchemy import MetaData # Module for MetaData
+from sqlalchemy import Table
+from sqlalchemy.inspection import inspect # Module for view tables
 # Start of function Get_players with 2 variables
 def get_seasons():
     # Start static variables 
