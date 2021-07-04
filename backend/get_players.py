@@ -1,11 +1,11 @@
-import dbCred # Credential for DB
+from backend import dbCred # Credential for DB
 import json # Json module
 import requests # Module for URL request
 import pandas as pd # Module for JSON arrange
 from sqlalchemy import create_engine # Module for working with DB
-from sqlalchemy import * # Module for working with DB
 from sqlalchemy.engine.url import URL # Module for working with DB
-from sqlalchemy.engine.reflection import Inspector # Module for view tables
+from sqlalchemy import MetaData # Module for MetaData
+from sqlalchemy.inspection import inspect # Module for view tables
 # Start Information about function
 # for example:
 # nationality='SWE'
