@@ -1,0 +1,101 @@
+<!doctype html>
+<Html> 
+    <head>
+        <style>
+        #divParam {
+            display: grid;
+            grid-template-columns: 200px 100px;
+            grid-auto-rows: 30px; 
+            grid-gap: 10px; 
+            margin: 5px;
+            padding: 10px;
+            font-style: italic;
+        }
+        select, button{
+            border-radius: 10px;
+        }
+        p{
+            margin-top: 5px;
+        }
+        th,td{
+            border-bottom: 1px solid black;
+            text-align: center;
+            height: 30px;
+            width: 0fr;
+            font-style: italic;
+        }
+        #button{
+        display: inline;
+        margin: 5px;
+        padding: 10px;
+        font-style: italic;
+        }
+        </style>
+        <title>Diploma app</title>
+    </head>
+        <body>
+            <h1 >"17 Stream of DevOps School"</h1>
+                <div id="divParam">
+                    <p>Choose season</p>
+                        <select name="seasons" id="seasons">
+                            {% for seasonId in seasonsIDs %}
+                            <option value="{{ seasonId }}">{{ seasonId }}</option>
+                            {% endfor %}
+                        </select>
+                    <p>Choose nationality</p>
+                    <select name="nationality" id="nationality">
+                        <option value="SWE"> Sweden</option>
+                        <option value="CAN"> Canada</option>
+                        <option value="RUS"> Russia</option>
+                        <option value="USA"> USA</option>
+                    </select>
+                    <p>Press PUT to put data in DB</p>
+                    <button onclick="getDataFromSelect()">PUT</button>   
+                    <script>
+                        function getDataFromSelect() {
+                        var season = document.getElementById("seasons").value;
+                        document.getElementById("season").innerHTML = season;
+                        var nat = document.getElementById("nationality").value;
+                        document.getElementById("nat").innerHTML = nat;
+                        }
+                    </script>
+                </div>
+                <!-- <div id="divTable">
+                    <table>
+                        <thead>
+                            <tr id="table">
+                                <th>Player Name</th>
+                                <th>Jersey Number</th>
+                                <th>Team</th>
+                                <th>Position</th>
+                                <th>Goals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for player in players %}
+                            <tr id="table">
+                                <td>{{ player[0] }}</td>
+                                <td>{{ player[1] }}</td>
+                                <td>{{ player[2] }}</td>
+                                <td>{{ player[3] }}</td>
+                                <td>{{ player[4] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <p id="button">Press Get to get data</p>
+                    <button id="button" onclick="getDataFromSelect()">GET</button>              
+                </div> -->
+                <div id="divTest" >
+                    <form action= '/' method="POST">
+                        Asset Tag:<br>
+                        <input name="tag"><br>
+                        <input type="submit" value="Submit_test">
+                        <p id="season" name="season_page"></p>
+                        <p id="nat" name="nat_page"></p>
+                    </form>
+                    <p>there is will be tag</p>
+                    <p>{{ tag }}</p>
+                </div>
+        </body>
+</Html>
