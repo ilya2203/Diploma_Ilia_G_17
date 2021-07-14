@@ -1,0 +1,39 @@
+{% extends 'main.html '%}
+<!--  -->
+    {% block title %}
+        Players list
+    {% endblock %}
+<!--  -->
+    {% block body %}
+    <p></p>
+    <form action="/players" method="POST">
+    <!-- <input type="text" placeholder="ex. 20202021"> -->
+    <p>For retrieve data from 2020-2021 season</p>
+    <input type="submit" name="getData" id="getData" value="Get Data">
+    </form>
+    <p>Time for execution {{ execTime }}</p>
+    <p>Top 10 Sweden players who scored in Canada</p>
+    <table>
+        <thead>
+            <tr id="table">
+                <th>Player Name</th>
+                <th>Jersey Number</th>
+                <th>Team</th>
+                <th>Position</th>
+                <th>Goals</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in playersDb %}
+            <tr id="table">
+                <td>{{ player[0] }}</td>
+                <td>{{ player[1] }}</td>
+                <td>{{ player[2] }}</td>
+                <td>{{ player[3] }}</td>
+                <td>{{ player[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+
+   {% endblock %}
