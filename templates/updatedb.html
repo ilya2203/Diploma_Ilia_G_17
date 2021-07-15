@@ -1,0 +1,15 @@
+{% extends 'main.html '%}
+<!--  -->
+    {% block title %}
+        Update DB
+    {% endblock %}
+<!--  -->
+    {% block body %}
+    <p></p>
+    <form action="/updatedb" method="POST">
+    <p>For update DB push Update </p>
+    <input type="submit" name="update" id="update" value="Update">
+    </form>
+    <p>{{ updateStatus }} for {{ execTime }}</p>
+
+   {% endblock %}

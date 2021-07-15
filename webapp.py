@@ -41,7 +41,7 @@ def get_players(season,nationality):
     metadata = MetaData()
     inspector = inspect(dbEngine)
     # Check if table is exist
-    if testDB==True :
+    if testDB(season)==True :
         # Drop table if exist
         dropTable = Table(tableName, metadata )
         dropTable.drop(dbEngine) 
@@ -137,11 +137,28 @@ def players():
     season='20202021'
     nationality="SWE"
     playersDbApp=""
+    execStatusApp=""
     if request.method == "POST" and request.form.get('getData'):
-        get_players(season,nationality)
+        if testDB(season)==None :
+            get_players(season,nationality)
+            execStatusApp="Data execution from API to DB"
+        else: execStatusApp="Table already created. Data execution from DB"
         playersDbApp=get_players_db('"'+season+'"')
     execTimeApp="%.2f" %(time.time() - start_time)
-    return render_template('players.html', execTime=execTimeApp, playersDb=playersDbApp)
+    return render_template('players.html', execTime=execTimeApp, playersDb=playersDbApp, execStatus=execStatusApp)
+
+@app.route('/updatedb',methods=(['GET','POST']))
+
+def updateDb():
+    start_time = time.time()
+    season='20202021'
+    nationality="SWE"
+    updateStatusApp=""
+    if request.method == "POST" and request.form.get('update'):
+        get_players(season,nationality)
+        updateStatusApp="Table updated up to date"
+    execTimeApp="%.2f" %(time.time() - start_time)
+    return render_template('updatedb.html', execTime=execTimeApp, updateStatus=updateStatusApp)
 
 if __name__ == '__main__':
     app.run(debug=True)
