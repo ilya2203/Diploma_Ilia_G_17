@@ -161,4 +161,4 @@ def updateDb():
     return render_template('updatedb.html', execTime=execTimeApp, updateStatus=updateStatusApp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
