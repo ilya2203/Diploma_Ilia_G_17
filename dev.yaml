@@ -1,0 +1,10 @@
+pool:
+  name: Azure Pipelines
+  vmImage: vs2017-win2016
+steps:
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  displayName: 'Replace tokens in **/*.py'
+  inputs:
+    targetFiles: '**/app.py'
+    tokenPrefix: '__'
+    tokenSuffix: '__'
