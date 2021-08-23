@@ -12,3 +12,6 @@ steps:
     targetFiles: '**/dbCred.py'
     tokenPrefix: '__'
     tokenSuffix: '__'
+- task: SonarCloudAnalyze@1
+  displayName: 'sonar'
+
