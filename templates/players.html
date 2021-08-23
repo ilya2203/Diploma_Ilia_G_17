@@ -1,4 +1,4 @@
-{% extends 'main.html '%}
+{% extends 'main.html'%}
 <!--  -->
     {% block title %}
         Players list
@@ -7,7 +7,7 @@
     {% block body %}
     <p></p>
     <form action="/players" method="POST">
-    <!-- <input type="text" placeholder="ex. 20202021"> -->
+
     <p>For retrieve data from 2020-2021 season</p>
     <input type="submit" name="getData" id="getData" value="Get Data">
     </form>
@@ -16,11 +16,11 @@
     <table>
         <thead>
             <tr id="table">
-                <th>Player Name</th>
-                <th>Jersey Number</th>
-                <th>Team</th>
-                <th>Position</th>
-                <th>Goals</th>
+                <th id="Player Name">Player Name</th>
+                <th id="Jersey Number">Jersey Number</th>
+                <th id="Team">Team</th>
+                <th id="Position">Position</th>
+                <th id="Goals">Goals</th>
             </tr>
         </thead>
         <tbody>
