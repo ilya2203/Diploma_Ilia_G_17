@@ -17,9 +17,11 @@ steps:
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'ilya2203'
-    scannerMode: 'MSBuild'
-    projectKey: 'ilya2203_Diploma_Ilia_G_17'
-    projectName: 'Diploma_Ilia_G_17'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'ilya2203_Diploma_Ilia_G_17'
+    cliProjectName: 'Diploma_Ilia_G_17'
+    cliSources: '.'
     
 - task: SonarCloudAnalyze@1
   displayName: 'sonar'
