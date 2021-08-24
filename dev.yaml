@@ -26,3 +26,9 @@ steps:
 - task: SonarCloudAnalyze@1
   displayName: 'sonar'
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    repository: 'diploma17'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
