@@ -12,3 +12,23 @@ steps:
     targetFiles: '**/dbCred.py'
     tokenPrefix: '__'
     tokenSuffix: '__'
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'ilya2203'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'ilya2203_Diploma_Ilia_G_17'
+    cliProjectName: 'Diploma_Ilia_G_17'
+    cliSources: '.'
+    
+- task: SonarCloudAnalyze@1
+  displayName: 'sonar'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub'
+    repository: 'diploma17'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
