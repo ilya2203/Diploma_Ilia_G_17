@@ -10,11 +10,11 @@ import json # Json module
 import requests # Module for URL request
 import pandas as pd # Module for JSON arrange
 import psycopg2
-##-> Start Information about function testDB
+##-> Start Information about function testdb
 # Checking if table exist
 ##<- End Information about function
-###-> Start of function testDB 
-def testDB(tableName):
+###-> Start of function testdb 
+def testdb(tableName):
     dbConnect=URL.create(dbCred.driver, dbCred.username, dbCred.password, dbCred.host, dbCred.port, dbCred.database)
     dbEngine = create_engine(dbConnect)
     inspector = inspect(dbEngine)
@@ -41,7 +41,7 @@ def get_players(season,nationality):
     metadata = MetaData()
     inspector = inspect(dbEngine)
     # Check if table is exist
-    if testDB(season)==True :
+    if testdb(season)==True :
         # Drop table if exist
         dropTable = Table(tableName, metadata )
         dropTable.drop(dbEngine) 
@@ -96,7 +96,7 @@ def get_players(season,nationality):
 ##-> Start Information about function get_players_db
 # Check connect to table and get players
 ##<- End Information about function get_players_db
-def dbConnecting():
+def dbconnecting():
     con = psycopg2.connect(
     database=dbCred.database,
     user=dbCred.username, 
@@ -107,7 +107,7 @@ def dbConnecting():
     return con
 ###-> Start of function get_players_db
 def get_players_db(season):
-    con = dbConnecting()
+    con = dbconnecting()
     cur = con.cursor()
     cur.execute("""
         SELECT "person_fullName","jerseyNumber","person_currentTeam_name","person_primaryPosition_type",
@@ -139,7 +139,7 @@ def players():
     playersDbApp=""
     execStatusApp=""
     if request.method == "POST" and request.form.get('getData'):
-        if testDB(season)==None :
+        if testdb(season)==None :
             get_players(season,nationality)
             execStatusApp="Data execution from API to DB"
         else: execStatusApp="Table already created. Data execution from DB"
@@ -149,7 +149,7 @@ def players():
 
 @app.route('/updatedb',methods=(['GET','POST']))
 
-def updateDb():
+def updatedb():
     start_time = time.time()
     season='20202021'
     nationality="SWE"
