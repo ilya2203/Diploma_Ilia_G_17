@@ -45,6 +45,4 @@ steps:
     repository: 'diploma17'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: |
-      $(Tag)
-      latest
+    tags: 'latest'
