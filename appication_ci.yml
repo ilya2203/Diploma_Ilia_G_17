@@ -26,9 +26,22 @@ steps:
 - task: SonarCloudAnalyze@1
   displayName: 'sonar'
 
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)/k8s'
+  inputs:
+    Contents: 'depk8s.yml'
+    TargetFolder: '$(build.artifactstagingdirectory)/k8s'
+    CleanTargetFolder: true
+  timeoutInMinutes: 2
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: k8s'
+  inputs:
+    ArtifactName: k8s
+
 - task: Docker@2
   inputs:
-    containerRegistry: 'DockerHub'
+    containerRegistry: 'Azure Registry'
     repository: 'diploma17'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
