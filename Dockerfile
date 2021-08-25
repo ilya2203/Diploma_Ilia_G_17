@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.9.6-windowsservercore-ltsc2016
+FROM python:3.9.6-slim-buster
 
 WORKDIR /app
 COPY app.py .
