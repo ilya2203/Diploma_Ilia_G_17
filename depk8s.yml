@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: gozhincontainerregistry01.azurecr.io/diploma17:63
+        image: gozhincontainerregistry01.azurecr.io/diploma17:latest
         ports:
         - containerPort: 80
         resources:
