@@ -30,8 +30,11 @@ kind: Service
 metadata:
     name: app
 spec:
-    type: LoadBalancer
-    ports:
-    - port: 80 
-    selector:
-        app: app
+  type: LoadBalancer
+  selector:
+    app: app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 5000
