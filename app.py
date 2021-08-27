@@ -15,9 +15,9 @@ import psycopg2
 ##<- End Information about function
 ###-> Start of function testdb 
 def testdb(tableName):
-    dbConnect=URL.create(dbcred.driver, dbcred.username, dbcred.password, dbcred.host, dbcred.port, dbcred.database)
-    dbEngine = create_engine(dbConnect)
-    inspector = inspect(dbEngine)
+    dbconnect=URL.create(dbcred.driver, dbcred.username, dbcred.password, dbcred.host, dbcred.port, dbcred.database)
+    dbengine = create_engine(dbconnect)
+    inspector = inspect(dbengine)
     # Check if table is exist
     if tableName in inspector.get_table_names():
         return True
