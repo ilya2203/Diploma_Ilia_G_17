@@ -9,7 +9,7 @@ steps:
 - task: qetza.replacetokens.replacetokens-task.replacetokens@3
   displayName: 'Replace tokens in dbCred.py'
   inputs:
-    targetFiles: '**/dbCred.py'
+    targetFiles: '**/dbcred.py'
     tokenPrefix: '__'
     tokenSuffix: '__'
 

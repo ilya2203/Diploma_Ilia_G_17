@@ -5,7 +5,7 @@ from sqlalchemy import MetaData # Module for MetaData
 from sqlalchemy import Table # Module for work with table
 from sqlalchemy.inspection import inspect # Module for view tables
 import time # Import time
-import dbCred # Credential for DB
+import dbcred # Credential for DB
 import json # Json module
 import requests # Module for URL request
 import pandas as pd # Module for JSON arrange
@@ -15,7 +15,7 @@ import psycopg2
 ##<- End Information about function
 ###-> Start of function testdb 
 def testdb(tableName):
-    dbConnect=URL.create(dbCred.driver, dbCred.username, dbCred.password, dbCred.host, dbCred.port, dbCred.database)
+    dbConnect=URL.create(dbcred.driver, dbcred.username, dbcred.password, dbcred.host, dbcred.port, dbcred.database)
     dbEngine = create_engine(dbConnect)
     inspector = inspect(dbEngine)
     # Check if table is exist
@@ -32,65 +32,65 @@ def testdb(tableName):
 ###-> Start of function get_players with 2 variables
 def get_players(season,nationality):
     # Start static variables 
-    tableName=season
-    teamsFromCan=[[8],[9],[10],[52],[23],[20],[22]]
+    tablename=season
+    teamsfromcan=[[8],[9],[10],[52],[23],[20],[22]]
     # End static variables 
     # Start DB connection 
-    dbConnect=URL.create(dbCred.driver, dbCred.username, dbCred.password, dbCred.host, dbCred.port, dbCred.database)
-    dbEngine = create_engine(dbConnect)
+    dbconnect=URL.create(dbcred.driver, dbcred.username, dbcred.password, dbcred.host, dbcred.port, dbcred.database)
+    dbengine = create_engine(dbconnect)
     metadata = MetaData()
-    inspector = inspect(dbEngine)
+    inspector = inspect(dbengine)
     # Check if table is exist
     if testdb(season)==True :
         # Drop table if exist
-        dropTable = Table(tableName, metadata )
-        dropTable.drop(dbEngine) 
+        droptable = Table(tablename, metadata )
+        droptable.drop(dbengine) 
     # End DB connection
     # Get data about games in season
-    urlFromFirst='https://statsapi.web.nhl.com/api/v1/schedule/?season='+str(season)
-    readyJsonFirst = json.loads(requests.get(urlFromFirst).content)['dates']
-    readyDictMain = pd.json_normalize(readyJsonFirst,sep='_')
-    gamesDates=list(readyDictMain['date'])
-    for gameDate in gamesDates:
+    urlfromfirst='https://statsapi.web.nhl.com/api/v1/schedule/?season='+str(season)
+    readyjsonfirst = json.loads(requests.get(urlfromfirst).content)['dates']
+    readydictmain = pd.json_normalize(readyjsonfirst,sep='_')
+    gamesdates=list(readydictmain['date'])
+    for gamedate in gamesdates:
         # Get data about each gameID 
-        urlFromSecond='https://statsapi.web.nhl.com/api/v1/schedule?date='+str(gameDate)
-        readyJsonSecond = json.loads(requests.get(urlFromSecond).content)['dates'][0]['games']
-        readyDictSecond = pd.json_normalize(readyJsonSecond,sep='_')
-        gamesId=len(list(readyDictSecond['gamePk']))
-        for gameId in range(gamesId):
+        urlfromsecond='https://statsapi.web.nhl.com/api/v1/schedule?date='+str(gamedate)
+        readyjsonsecond = json.loads(requests.get(urlfromsecond).content)['dates'][0]['games']
+        readydictsecond = pd.json_normalize(readyjsonsecond,sep='_')
+        gamesid=len(list(readydictsecond['gamePk']))
+        for gameid in range(gamesid):
             # Get data about teams in all games
-            readyJsonThird = json.loads(requests.get(urlFromSecond).content)['dates'][0]['games'][gameId]['teams']['home']['team']
-            readyDictThird = pd.json_normalize(readyJsonThird,sep='_')
-            readyJsonFourth = json.loads(requests.get(urlFromSecond).content)['dates'][0]['games'][gameId]['gamePk']
-            homeTeamsId=list(readyDictThird['id'])
+            readyjsonthird = json.loads(requests.get(urlfromsecond).content)['dates'][0]['games'][gameid]['teams']['home']['team']
+            readydictthird = pd.json_normalize(readyjsonthird,sep='_')
+            readyjsonfourth = json.loads(requests.get(urlfromsecond).content)['dates'][0]['games'][gameid]['gamePk']
+            hometeamsid=list(readydictthird['id'])
             # Choose Canadian teams
-            if homeTeamsId in teamsFromCan:
+            if hometeamsid in teamsfromcan:
                 # Get data about each game in Canada 
-                urlFromFifth='https://statsapi.web.nhl.com/api/v1/game/'+str(readyJsonFourth)+'/boxscore'
-                readyJsonFifth = json.loads(requests.get(urlFromFifth).content)['teams']
+                urlfromfifth='https://statsapi.web.nhl.com/api/v1/game/'+str(readyjsonfourth)+'/boxscore'
+                readyjsonfifth = json.loads(requests.get(urlfromfifth).content)['teams']
                 #print(readyJsonFourth)
                 # Get data about players in each game in Canada
-                for homeAway in readyJsonFifth:
+                for homeaway in readyjsonfifth:
                     #print(homeAway)
-                    readyJsonSixth = readyJsonFifth[homeAway]['players']
-                    for playerId in readyJsonSixth:
-                        readyJsonSeventh = readyJsonSixth[playerId]
+                    readyjsonsixth = readyjsonfifth[homeaway]['players']
+                    for playerid in readyjsonsixth:
+                        readyjsonseventh = readyjsonsixth[playerid]
                         # Choose nationality
-                        if readyJsonSeventh['person']['nationality'] == nationality: 
+                        if readyjsonseventh['person']['nationality'] == nationality: 
                             # Checking stats field         
-                            if len(readyJsonSeventh['stats']) == 1: 
+                            if len(readyjsonseventh['stats']) == 1: 
                                 # Checking keys on field stats         
-                                if 'skaterStats' in readyJsonSeventh['stats'].keys():
+                                if 'skaterStats' in readyjsonseventh['stats'].keys():
                                     # Checking stats: skaters or goalie and put data in DB
-                                    if readyJsonSeventh['stats']['skaterStats']['goals'] > 0:
-                                        readyDictSeventh = pd.json_normalize(readyJsonSeventh,sep='_')
+                                    if readyjsonseventh['stats']['skaterStats']['goals'] > 0:
+                                        readydictseventh = pd.json_normalize(readyjsonseventh,sep='_')
                                         #print(readyDictSeventh['person_id'][0])
-                                        readyDictSeventh.to_sql(tableName, dbEngine,if_exists='append', index=False)
+                                        readydictseventh.to_sql(tablename, dbengine,if_exists='append', index=False)
                                 else: 
-                                    if readyJsonSeventh['stats']['goalieStats']['goals'] > 0:
-                                        readyDictSeventh = pd.json_normalize(readyJsonSeventh,sep='_')
+                                    if readyjsonseventh['stats']['goalieStats']['goals'] > 0:
+                                        readydictseventh = pd.json_normalize(readyjsonseventh,sep='_')
                                         #print(readyDictSeventh['person_id'][0])
-                                        readyDictSeventh.to_sql(tableName, dbEngine,if_exists='append', index=False)
+                                        readydictseventh.to_sql(tablename, dbengine,if_exists='append', index=False)
 ###<- End of function Get_players with 2 variables
 
 ##-> Start Information about function get_players_db
@@ -98,11 +98,11 @@ def get_players(season,nationality):
 ##<- End Information about function get_players_db
 def dbconnecting():
     con = psycopg2.connect(
-    database=dbCred.database,
-    user=dbCred.username, 
-    password=dbCred.password,
-    host=dbCred.host,
-    port=dbCred.port,
+    database=dbcred.database,
+    user=dbcred.username, 
+    password=dbcred.password,
+    host=dbcred.host,
+    port=dbcred.port,
     )
     return con
 ###-> Start of function get_players_db
@@ -136,16 +136,16 @@ def players():
     start_time = time.time()
     season='20202021'
     nationality="SWE"
-    playersDbApp=""
-    execStatusApp=""
+    playersdbapp=""
+    execstatusapp=""
     if request.method == "POST" and request.form.get('getData'):
         if testdb(season)==None :
             get_players(season,nationality)
-            execStatusApp="Data execution from API to DB"
-        else: execStatusApp="Table already created. Data execution from DB"
-        playersDbApp=get_players_db('"'+season+'"')
-    execTimeApp="%.2f" %(time.time() - start_time)
-    return render_template('players.html', execTime=execTimeApp, playersDb=playersDbApp, execStatus=execStatusApp)
+            execstatusapp="Data execution from API to DB"
+        else: execstatusapp="Table already created. Data execution from DB"
+        playersdbapp=get_players_db('"'+season+'"')
+    exectimeapp="%.2f" %(time.time() - start_time)
+    return render_template('players.html', exectime=exectimeapp, playersdb=playersdbapp, execstatus=execstatusapp)
 
 @app.route('/updatedb',methods=(['GET','POST']))
 
@@ -153,12 +153,12 @@ def updatedb():
     start_time = time.time()
     season='20202021'
     nationality="SWE"
-    updateStatusApp=""
+    updatestatusapp=""
     if request.method == "POST" and request.form.get('update'):
         get_players(season,nationality)
-        updateStatusApp="Table updated up to date"
-    execTimeApp="%.2f" %(time.time() - start_time)
-    return render_template('updatedb.html', execTime=execTimeApp, updateStatus=updateStatusApp)
+        updatestatusapp="Table updated up to date"
+    exectimeapp="%.2f" %(time.time() - start_time)
+    return render_template('updatedb.html', exectime=exectimeapp, updatestatus=updatestatusapp)
 
 if __name__ == '__main__':
     app.run()

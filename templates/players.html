@@ -11,7 +11,7 @@
     <p>For retrieve data from 2020-2021 season</p>
     <input type="submit" name="getData" id="getData" value="Get Data">
     </form>
-    <p>{{ execStatus }} for {{ execTime }}</p>
+    <p>{{ execstatus }} for {{ exectime }}</p>
     <p>Top 10 Sweden players who scored in Canada</p>
     <table>
         <thead>
@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for player in playersDb %}
+            {% for player in playersdb %}
             <tr id="table">
                 <td>{{ player[0] }}</td>
                 <td>{{ player[1] }}</td>
