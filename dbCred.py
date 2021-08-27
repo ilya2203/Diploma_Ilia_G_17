@@ -1,6 +1,0 @@
-driver    = '__dbdriver__'
-host      = '__dbhost__'
-port      = '__dbport__'
-username  = '__dbusername__'
-password  = '__dbpassword__'
-database  = '__dbdatabase__'
