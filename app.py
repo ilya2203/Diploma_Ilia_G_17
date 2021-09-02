@@ -10,18 +10,18 @@ import json # Json module
 import requests # Module for URL request
 import pandas as pd # Module for JSON arrange
 import psycopg2
-##-> Start Information about function testdb
+##-> Start Information about function test_db
 # Checking if table exist
 ##<- End Information about function
-###-> Start of function testdb 
-def testdb(table_name):
+###-> Start of function test_db 
+def test_db(table_name):
     db_connect=URL.create(dbcred.driver, dbcred.username, dbcred.password, dbcred.host, dbcred.port, dbcred.database)
     db_engine = create_engine(db_connect)
     inspector = inspect(db_engine)
     # Check if table is exist
     if table_name in inspector.get_table_names():
         return True
-###<- End of function testDB
+###<- End of function test_db
 
 ##-> Start Information about function
 # for example:
@@ -40,7 +40,7 @@ def get_players(season,nationality):
     db_engine = create_engine(db_connect)
     metadata = MetaData()
     # Check if table is exist
-    if testdb(season)==True :
+    if test_db(season)==True :
         # Drop table if exist
         drop_table = Table(table_name, metadata )
         drop_table.drop(db_engine) 
@@ -95,7 +95,7 @@ def get_players(season,nationality):
 ##-> Start Information about function get_players_db
 # Check connect to table and get players
 ##<- End Information about function get_players_db
-def dbconnecting():
+def db_connecting():
     con = psycopg2.connect(
     database=dbcred.database,
     user=dbcred.username, 
@@ -106,7 +106,7 @@ def dbconnecting():
     return con
 ###-> Start of function get_players_db
 def get_players_db(season):
-    con = dbconnecting()
+    con = db_connecting()
     cur = con.cursor()
     cur.execute("""
         SELECT "person_fullName","jerseyNumber","person_currentTeam_name","person_primaryPosition_type",
@@ -138,7 +138,7 @@ def players():
     players_db_app=""
     exec_status_app=""
     if request.method == "POST" and request.form.get('getData'):
-        if testdb(season)==None :
+        if test_db(season)==None :
             get_players(season,nationality)
             exec_status_app="Data execution from API to DB"
         else: exec_status_app="Table already created. Data execution from DB"
